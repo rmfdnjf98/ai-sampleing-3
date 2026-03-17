@@ -1,0 +1,90 @@
+{{> layout/header}}
+
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>회원가입</h4>
+                </div>
+                <div class="card-body">
+                    <form action="/join" method="post" onsubmit="return validateForm()">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">아이디</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="username" name="username" placeholder="아이디를 입력하세요" required onchange="resetCheck()">
+                                <button class="btn btn-outline-primary" type="button" onclick="checkUsername()">중복확인</button>
+                            </div>
+                            <div id="username-msg" class="form-text mt-1">중복확인을 진행해주세요.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">비밀번호</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">이메일</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="이메일을 입력하세요" required>
+                        </div>
+                        <div class="d-grid mt-3">
+                            <button id="btn-join" class="btn btn-primary" type="submit" disabled>가입하기</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let isUsernameChecked = false;
+
+    // 아이디 중복 체크 (Fetch API 활용)
+    async function checkUsername() {
+        var username = document.querySelector("#username").value;
+        if (!username) {
+            alert("아이디를 입력해주세요.");
+            return;
+        }
+
+        try {
+            var response = await fetch(`/api/user/username-same-check?username=${username}`);
+            var result = await response.json();
+
+            if (result.body === true) {
+                isUsernameChecked = true;
+                document.querySelector("#username-msg").innerText = "사용 가능한 아이디입니다.";
+                document.querySelector("#username-msg").classList.remove("text-danger");
+                document.querySelector("#username-msg").classList.add("text-success");
+                document.querySelector("#btn-join").disabled = false;
+            } else {
+                isUsernameChecked = false;
+                document.querySelector("#username-msg").innerText = "이미 사용 중인 아이디입니다.";
+                document.querySelector("#username-msg").classList.remove("text-success");
+                document.querySelector("#username-msg").classList.add("text-danger");
+                document.querySelector("#btn-join").disabled = true;
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("중복 체크 중 오류가 발생했습니다.");
+        }
+    }
+
+    // 아이디 변경 시 중복 체크 리셋
+    function resetCheck() {
+        isUsernameChecked = false;
+        document.querySelector("#username-msg").innerText = "중복확인을 다시 진행해주세요.";
+        document.querySelector("#username-msg").classList.remove("text-success", "text-danger");
+        document.querySelector("#btn-join").disabled = true;
+    }
+
+    // 폼 제출 전 최종 검증
+    function validateForm() {
+        if (!isUsernameChecked) {
+            alert("아이디 중복 확인이 필요합니다.");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+{{> layout/footer}}

@@ -1,6 +1,7 @@
 package com.example.demo.user;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -12,4 +13,9 @@ public class UserController {
     private final UserService userService;
     private final HttpSession session;
 
+    // 회원가입 페이지 반환
+    @GetMapping("/join-form")
+    public String joinForm() {
+        return "user/join-form";
+    }
 }

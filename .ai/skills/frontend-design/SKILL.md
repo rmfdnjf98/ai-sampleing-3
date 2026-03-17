@@ -1,8 +1,7 @@
 ---
 name: frontend-design
-category: UI/UX Engineering
 description: 최신 웹 트렌드를 반영하여 UI를 설계하고, 디자인 토큰을 활용해 서버 사이드 렌더링(SSR)용 Mustache 템플릿(HTML/CSS)을 일관성 있게 생성합니다.
-trigger: "frontend-design 스킬 발동", "디자인 토큰 뽑아줘", "Mustache 화면 만들어줘", "SSR 템플릿 짜줘"
+mode: 수동
 ---
 
 # 🎨 Frontend Design Specialist

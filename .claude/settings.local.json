@@ -4,7 +4,8 @@
       "Bash(./gradlew --version)",
       "Bash(./gradlew build)",
       "Bash(find /c/workspace/sample_lab/demo/.ai -type f -name \"*.sh\" -o -name \"*.md\" -o -name \"*.json\" 2>/dev/null | head -30)",
-      "Bash(command -v jq && jq --version; command -v python3 && python3 --version; command -v python && python --version)"
+      "Bash(command -v jq && jq --version; command -v python3 && python3 --version; command -v python && python --version)",
+      "Bash(wc -l /c/workspace/sample_lab/demo/.ai/rules/*.md)"
     ]
   }
 }
