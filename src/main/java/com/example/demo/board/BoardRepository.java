@@ -15,9 +15,9 @@ public interface BoardRepository extends JpaRepository<Board, Integer> {
     @Query("delete from Board b where b.user.id = :userId")
     void deleteByUserId(@Param("userId") Integer userId);
 
-    @Query(value = "select * from board_tb order by id desc limit :offset, :size", nativeQuery = true)
-    List<Board> findAll(@Param("offset") int offset, @Param("size") int size);
+    @Query("SELECT b FROM Board b ORDER BY b.id DESC LIMIT :limit OFFSET :offset")
+    List<Board> findAll(@Param("limit") int limit, @Param("offset") int offset);
 
-    @Query(value = "select count(*) from board_tb", nativeQuery = true)
+    @Query("SELECT count(b) FROM Board b")
     Long countAll();
 }
