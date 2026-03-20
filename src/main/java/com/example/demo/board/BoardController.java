@@ -1,6 +1,7 @@
 package com.example.demo.board;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import jakarta.servlet.http.HttpSession;
@@ -14,7 +15,9 @@ public class BoardController {
     private final HttpSession session;
 
     @GetMapping("/")
-    public String home() {
-        return "home";
+    public String list(Model model) {
+        var data = boardService.게시글목록();
+        model.addAttribute("models", data);
+        return "board/list";
     }
 }

@@ -9,4 +9,17 @@ public class BoardResponse {
     public static class Detail {
 
     }
+
+    @Data
+    public static class ListDTO {
+        private Integer id;
+        private String title;
+        private String username;
+
+        public ListDTO(Board board) {
+            this.id = board.getId();
+            this.title = board.getTitle();
+            this.username = board.getUser().getUsername();
+        }
+    }
 }
