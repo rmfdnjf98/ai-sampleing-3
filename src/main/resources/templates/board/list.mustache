@@ -10,22 +10,46 @@
                     <tr>
                         <th>번호</th>
                         <th>제목</th>
+                        <th>작성자</th>
                         <th>상세보기</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{#models}}
+                    {{#model.boards}}
                     <tr>
                         <td>{{id}}</td>
                         <td>{{title}}</td>
+                        <td>{{username}}</td>
                         <td><a href="/board/{{id}}" class="btn btn-primary btn-sm">상세보기</a></td>
                     </tr>
-                    {{/models}}
+                    {{/model.boards}}
                 </tbody>
             </table>
 
-            <div class="mt-4 text-center">
-                <p class="text-muted">현재 페이지: <strong>{{currentPage}}</strong> (주소창에 <code>?page=1</code> 등을 입력해 보세요!)</p>
+            <!-- [Step 4] 블록 페이징 UI (1~5, 6~10...) -->
+            <nav class="d-flex justify-content-center mt-4">
+                <ul class="pagination">
+                    <!-- 이전 블록 버튼 (첫 페이지면 비활성화) -->
+                    <li class="page-item {{#model.first}}disabled{{/model.first}}">
+                        <a class="page-link" href="?page={{model.prevPage}}">이전</a>
+                    </li>
+
+                    <!-- 페이지 번호들 (startPage ~ endPage) -->
+                    {{#model.pageNumbers}}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{.}}">{{.}}</a>
+                    </li>
+                    {{/model.pageNumbers}}
+
+                    <!-- 다음 블록 버튼 (마지막 페이지면 비활성화) -->
+                    <li class="page-item {{#model.last}}disabled{{/model.last}}">
+                        <a class="page-link" href="?page={{model.nextPage}}">다음</a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="text-center text-muted mt-2">
+                현재 페이지: {{model.page}} (블록 범위: {{model.startPage}} ~ {{model.endPage}})
             </div>
         </div>
     </div>

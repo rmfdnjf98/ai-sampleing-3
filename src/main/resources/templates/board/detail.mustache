@@ -1,0 +1,31 @@
+{{> layout/header}}
+
+<div class="container mt-3">
+    <div class="card mb-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h2>{{model.title}}</h2>
+            <div>
+                {{#model.isOwner}}
+                <a href="/board/{{model.id}}/update-form" class="btn btn-warning">수정</a>
+                <form action="/board/{{model.id}}/delete" method="post" style="display: inline;">
+                    <button class="btn btn-danger">삭제</button>
+                </form>
+                {{/model.isOwner}}
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <span class="badge bg-secondary">작성자: {{model.username}}</span>
+            </div>
+            <hr>
+            <div class="p-3">
+                {{{model.content}}}
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <a href="/" class="btn btn-outline-primary">목록으로</a>
+    </div>
+</div>
+
+{{> layout/footer}}

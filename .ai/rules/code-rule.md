@@ -37,6 +37,8 @@ com.example.demo/
 - 조회 메서드는 `@Transactional(readOnly = true)`를 사용한다.
 - 쓰기 메서드(save, update, delete)는 `@Transactional`을 사용한다.
 - DTO는 Service 레이어에서 변환하며, Entity를 Controller로 노출하지 않는다.
+- **서비스 완결성**: 서비스는 화면(View)에 필요한 모든 데이터(게시글 목록, 페이징 메타데이터 등)를 하나의 DTO로 묶어서 반환한다.
+- **유효성 검사**: 페이지 번호 등 요청 파라미터의 유효성 검사는 서비스에서 수행하며, 오류 시 예외를 던진다.
 
 ## 5. Controller Rules
 
@@ -44,6 +46,7 @@ com.example.demo/
 - REST API 경로는 `/api`로 시작한다.
 - SSR은 `HttpSession`을 사용하고 `String`을 반환한다.
 - REST는 `Resp.ok()` 또는 `Resp.fail()`을 사용한다.
+- **컨트롤러 최소화**: 컨트롤러는 비즈니스 로직을 가지지 않으며, 서비스에서 받은 DTO를 `model.addAttribute("model", dto)` 한 번으로 모델에 담아 뷰에 전달하는 것을 원칙으로 한다.
 
 ## 6. DTO Rules
 
